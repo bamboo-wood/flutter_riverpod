@@ -18,19 +18,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends ConsumerWidget {
-  MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  int _counter = 0;
-
-  void _incrementCounter() {}
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,14 +38,14 @@ class MyHomePage extends ConsumerWidget {
           children: <Widget>[
             Text(ref.watch(messageProvider)),
             Text(
-              '$_counter',
+              ref.watch(countProvider).toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () => ref.read(countProvider.notifier).state++,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

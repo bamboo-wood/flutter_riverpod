@@ -8,3 +8,8 @@ final titleProvider = Provider<String>((ref) {
 final messageProvider = Provider<String>((ref) {
   return 'You have pushed the button this many times:';
 });
+
+// State Providerは変数をグローバル管理するためのもの
+final countProvider = StateProvider<int>((ref) {
+  return 0;
+});
