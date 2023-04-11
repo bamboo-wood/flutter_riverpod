@@ -23,31 +23,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    print('MyHomePage build() called.');
     return Scaffold(
       appBar: AppBar(
-        title: Text(ref.watch(titleProvider)),
+        title: Consumer(
+          builder: ((context, ref, child) => Text(ref.watch(titleProvider))),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(ref.watch(messageProvider)),
-            Text(
-              ref.watch(countProvider).toString(),
-              style: Theme.of(context).textTheme.headlineMedium,
+            Consumer(
+              builder: (context, ref, child) {
+                return Text(
+                  ref.watch(messageProvider),
+                  style: Theme.of(context).textTheme.bodySmall,
+                );
+              },
+            ),
+            const SizedBox(height: 20.0),
+            Consumer(
+              builder: (context, ref, child) {
+                return Text(
+                  ref.watch(countProvider).toString(),
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              },
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => ref.read(countProvider.notifier).state++,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Consumer(
+        builder: ((context, ref, child) {
+          return FloatingActionButton(
+            onPressed: () => ref.watch(countProvider.notifier).state++,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          );
+        }),
       ),
     );
   }
