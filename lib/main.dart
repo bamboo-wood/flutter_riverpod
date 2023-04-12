@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_explanation/models/count_data.dart';
 import 'package:flutter_riverpod_explanation/providers/provider.dart';
+import 'package:flutter_riverpod_explanation/notifiers/count_data_notifier.dart';
 
 void main() {
   runApp(
@@ -35,6 +36,8 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    CountData countData = ref.watch(countDataProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -55,24 +58,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
             const SizedBox(height: 20.0),
             Text(
-              ref.watch(countDataProvider).count.toString(),
+              countData.count.toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
-                  onPressed: () {
-                    CountData countData = ref.watch(countDataProvider);
-                    ref.read(countDataProvider.notifier).state = countData.decrease();
-                  },
+                  onPressed: () => ref.read(countDataProvider.notifier).decrease(),
                   child: const Icon(CupertinoIcons.minus),
                 ),
                 FloatingActionButton(
-                  onPressed: () {
-                    CountData countData = ref.watch(countDataProvider);
-                    ref.read(countDataProvider.notifier).state = countData.increase();
-                  },
+                  onPressed: () => ref.read(countDataProvider.notifier).increase(),
                   child: const Icon(CupertinoIcons.plus),
                 ),
               ],
@@ -80,25 +77,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  ref.watch(countDataProvider.select((value) => value.countDown)).toString(),
-                ),
-                Text(
-                  ref.watch(countDataProvider.select((value) => value.countUp)).toString(),
-                ),
+                Text(countData.countDown.toString()),
+                Text(countData.countUp.toString()),
               ],
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.read(countDataProvider.notifier).state = const CountData(
-            count: 0,
-            countUp: 0,
-            countDown: 0,
-          );
-        },
+        onPressed: () => ref.read(countDataProvider.notifier).reset(),
         child: const Icon(Icons.refresh),
       ),
     );
