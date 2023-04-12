@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod_explanation/Provider/provider.dart';
+import 'package:flutter_riverpod_explanation/providers/provider.dart';
 
 void main() {
   runApp(
