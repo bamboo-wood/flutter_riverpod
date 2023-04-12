@@ -36,7 +36,8 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    CountData countData = ref.watch(countDataProvider);
+    CountData countDataState = ref.watch(countDataProvider);
+    CountDataNotifier countDataNotifier = ref.read(countDataProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,18 +59,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
             const SizedBox(height: 20.0),
             Text(
-              countData.count.toString(),
+              countDataState.count.toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
-                  onPressed: () => ref.read(countDataProvider.notifier).decrease(),
+                  onPressed: () => countDataNotifier.decrease(),
                   child: const Icon(CupertinoIcons.minus),
                 ),
                 FloatingActionButton(
-                  onPressed: () => ref.read(countDataProvider.notifier).increase(),
+                  onPressed: () => countDataNotifier.increase(),
                   child: const Icon(CupertinoIcons.plus),
                 ),
               ],
@@ -77,15 +78,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(countData.countDown.toString()),
-                Text(countData.countUp.toString()),
+                Text(countDataState.countDown.toString()),
+                Text(countDataState.countUp.toString()),
               ],
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => ref.read(countDataProvider.notifier).reset(),
+        onPressed: () => countDataNotifier.reset(),
         child: const Icon(Icons.refresh),
       ),
     );
