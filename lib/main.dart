@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_explanation/Provider/provider.dart';
@@ -33,7 +34,6 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    print('MyHomePage build() called.');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -57,13 +57,32 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ref.watch(countProvider).toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                FloatingActionButton(
+                  onPressed: () => {ref.read(countProvider.notifier).state++},
+                  child: const Icon(CupertinoIcons.minus),
+                ),
+                FloatingActionButton(
+                  onPressed: () => {ref.read(countProvider.notifier).state++},
+                  child: const Icon(CupertinoIcons.plus),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text("1"),
+                Text('2'),
+              ],
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {ref.read(countProvider.notifier).state++},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.refresh),
       ),
     );
   }
