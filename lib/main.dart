@@ -18,21 +18,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class MyHomePage extends ConsumerStatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
+  @override
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print('MyHomePage build() called.');
     return Scaffold(
       appBar: AppBar(
-        title: Consumer(
-          builder: ((context, ref, child) => Text(ref.watch(titleProvider))),
+        title: Text(
+          ref.watch(titleProvider),
         ),
       ),
       body: Center(
@@ -48,26 +53,17 @@ class MyHomePage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20.0),
-            Consumer(
-              builder: (context, ref, child) {
-                return Text(
-                  ref.watch(countProvider).toString(),
-                  style: Theme.of(context).textTheme.headlineMedium,
-                );
-              },
+            Text(
+              ref.watch(countProvider).toString(),
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
-      floatingActionButton: Consumer(
-        builder: ((context, ref, child) {
-          print('FloatingActionButton onPressed() called.');
-          return FloatingActionButton(
-            onPressed: () => {ref.read(countProvider.notifier).state++},
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          );
-        }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {ref.read(countProvider.notifier).state++},
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
