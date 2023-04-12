@@ -64,22 +64,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 FloatingActionButton(
                   onPressed: () {
                     CountData countData = ref.watch(countDataProvider);
-                    ref.read(countDataProvider.notifier).state = CountData(
-                      count: countData.count - 1,
-                      countUp: countData.countUp,
-                      countDown: countData.countDown - 1,
-                    );
+                    ref.read(countDataProvider.notifier).state = countData.decrease();
                   },
                   child: const Icon(CupertinoIcons.minus),
                 ),
                 FloatingActionButton(
                   onPressed: () {
                     CountData countData = ref.watch(countDataProvider);
-                    ref.read(countDataProvider.notifier).state = CountData(
-                      count: countData.count + 1,
-                      countUp: countData.countUp + 1,
-                      countDown: countData.countDown,
-                    );
+                    ref.read(countDataProvider.notifier).state = countData.increase();
                   },
                   child: const Icon(CupertinoIcons.plus),
                 ),

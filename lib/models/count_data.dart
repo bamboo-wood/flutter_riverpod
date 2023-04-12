@@ -15,3 +15,25 @@ class CountData with _$CountData {
 
   factory CountData.fromJson(Map<String, dynamic> json) => _$CountDataFromJson(json);
 }
+
+extension CountDataX on CountData {
+  CountData increase() {
+    return CountData(
+      count: count + 1,
+      countUp: countUp + 1,
+      countDown: countDown,
+    );
+  }
+
+  CountData decrease() {
+    return CountData(
+      count: count - 1,
+      countUp: countUp,
+      countDown: countDown - 1,
+    );
+  }
+
+  CountData reset() {
+    return CountData.initial();
+  }
+}
