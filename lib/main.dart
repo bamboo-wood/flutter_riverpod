@@ -37,7 +37,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     CountData countDataState = ref.watch(countDataProvider);
-    CountDataNotifier countDataNotifier = ref.read(countDataProvider.notifier);
+    // CountDataNotifier countDataNotifier = ref.read(countDataProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,11 +66,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FloatingActionButton(
-                  onPressed: () => countDataNotifier.decrease(),
+                  onPressed: () => ref.read(countDataProvider.notifier).decrease(),
                   child: const Icon(CupertinoIcons.minus),
                 ),
                 FloatingActionButton(
-                  onPressed: () => countDataNotifier.increase(),
+                  onPressed: () => ref.read(countDataProvider.notifier).increase(),
                   child: const Icon(CupertinoIcons.plus),
                 ),
               ],
@@ -86,7 +86,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => countDataNotifier.reset(),
+        onPressed: () => ref.read(countDataProvider.notifier).reset(),
         child: const Icon(Icons.refresh),
       ),
     );
