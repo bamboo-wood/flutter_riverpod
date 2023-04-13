@@ -51,7 +51,7 @@ void main() {
     await tester.pumpWidgetBuilder(
       ProviderScope(
         overrides: [countDataProvider.overrideWith((ref) => mock)],
-        child: const MyHomePage(),
+        child: const MyApp(),
       ),
     );
 
