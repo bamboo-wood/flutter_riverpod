@@ -22,7 +22,18 @@ void main() {
 
     await multiScreenGolden(
       tester,
-      'my_home_page',
+      'my_home_page_initial',
+      devices: devices,
+    );
+
+    await tester.tap(find.byIcon(CupertinoIcons.plus));
+    await tester.tap(find.byIcon(CupertinoIcons.plus));
+    await tester.tap(find.byIcon(CupertinoIcons.minus));
+    await tester.pump();
+
+    await multiScreenGolden(
+      tester,
+      'my_home_page_tapped',
       devices: devices,
     );
   });
